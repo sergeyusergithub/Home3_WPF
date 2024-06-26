@@ -18,42 +18,27 @@ namespace Home3_WPF
     public partial class MainWindow : Window
     {
         public List<ToDo> toDoList = new List<ToDo>();
+        public CreateToDo createToDo = new CreateToDo();
         public MainWindow()
         {
             InitializeComponent();
-            descriptionToDo.Text = "Описания нет";
-            dateToDo.SelectedDate = DateTime.Today.AddDays(1);
+            
 
-            toDoList.Add(new ToDo("Родиться", new DateTime(2024, 01, 10), "Важно!"));
-            toDoList.Add(new ToDo("Посадить сына", new DateTime(2024, 01, 11), "Важно!!"));
-            toDoList.Add(new ToDo("Построить дерево", new DateTime(2024, 01, 12), "Важно!!!"));
-            toDoList.Add(new ToDo("Вырастить дом", new DateTime(2024, 01, 13), "Важно!!!!!"));
-            toDoList.Add(new ToDo("Умереть", new DateTime(2024, 01, 15), "Важно!!!!!!"));
+            toDoList.Add(new ToDo("Родиться", new DateTime(2024, 01, 10), "Важно!",false));
+            toDoList.Add(new ToDo("Посадить сына", new DateTime(2024, 01, 11), "Важно!!",false));
+            toDoList.Add(new ToDo("Построить дерево", new DateTime(2024, 01, 12), "Важно!!!", false));
+            toDoList.Add(new ToDo("Вырастить дом", new DateTime(2024, 01, 13), "Важно!!!!!",false));
+            toDoList.Add(new ToDo("Умереть", new DateTime(2024, 01, 15), "Важно!!!!!!", false));
 
             RefreshToDoList();
-            CheckboxEnableToDo_Unchecked(Owner, new RoutedEventArgs()); // Hide right panel
 
 
         }
 
-        private void RefreshToDoList()
+        public void RefreshToDoList()
         {
             listToDo.ItemsSource = null;
             listToDo.ItemsSource = toDoList;
-        }
-
-        private void CheckboxEnableToDo_Checked(object sender, RoutedEventArgs e)
-        {
-            if (groupBoxToDo == null || buttonAdd == null) return;
-            groupBoxToDo.Visibility = Visibility.Visible;
-            buttonAdd.Visibility = Visibility.Visible;
-        }
-
-        private void CheckboxEnableToDo_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (groupBoxToDo == null || buttonAdd == null) return;
-            groupBoxToDo.Visibility = Visibility.Hidden;
-            buttonAdd.Visibility = Visibility.Hidden;
         }
 
         private void ButtonRemoveToDo_Click(object sender, RoutedEventArgs e)
@@ -64,16 +49,8 @@ namespace Home3_WPF
 
         private void ButtonAddToDo_Click(Object sender, RoutedEventArgs e)
         {
-            if (!dateToDo.SelectedDate.HasValue)
-            {
-                MessageBox.Show("Дата повесилась", Name = "ашыпка");
-                return;
-            }
-
-            toDoList.Add(new ToDo(titleToDo.Text, (DateTime)dateToDo.SelectedDate, descriptionToDo.Text));
-            titleToDo.Text = null;
-            descriptionToDo.Text = "Описания нет";
-            RefreshToDoList();
+            createToDo.Show();
+            this.Owner = createToDo;
         }
 
     }
