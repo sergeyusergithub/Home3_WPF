@@ -8,9 +8,9 @@
         Title="Добавление нового дела" Height="450" Width="800">
     <Grid>
         <DockPanel LastChildFill="True" Margin="10 0 5 5">
-            <Button Margin="0 5 0 0" Name="buttonAdd" DockPanel.Dock="Bottom" MaxWidth="100"
+            <Button Margin="0 5 0 0" Name="buttonSave" DockPanel.Dock="Bottom" MaxWidth="100"
              MinHeight="20" Background="#5EBEC4" ToolTip="При добавлении дело
-             появится в списке дел слева, и его придется выполнить" Padding="5"
+             появится в списке дел в новом окне, и его придется выполнить" Padding="5"
              Click="ButtonSaveToDo_Click">Сохранить дело</Button>
 
             <GroupBox Name ="groupBoxToDo" BorderBrush="Gray" BorderThickness="1">

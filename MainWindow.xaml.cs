@@ -17,7 +17,7 @@ namespace Home3_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<ToDo> toDoList = new List<ToDo>();
+        public static List<ToDo> toDoList = new List<ToDo>();
         public CreateToDo createToDo = new CreateToDo();
         public MainWindow()
         {

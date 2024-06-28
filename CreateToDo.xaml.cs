@@ -36,11 +36,11 @@ namespace Home3_WPF
                 return;
             }
 
-            (this.Owner as MainWindow).toDoList.Add(new ToDo(titleToDo.Text, (DateTime)dateToDo.SelectedDate, descriptionToDo.Text,false));
+            //(this.Owner as MainWindow).toDoList.Add(new ToDo(titleToDo.Text, (DateTime)dateToDo.SelectedDate, descriptionToDo.Text,false));
             titleToDo.Text = null;
             descriptionToDo.Text = "Описания нет";
             //(this.Owner as MainWindow).RefreshToDoList();
-            this.Close();
+            this.Hide();
         }
     }
 }
