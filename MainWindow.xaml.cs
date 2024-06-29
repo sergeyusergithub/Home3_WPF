@@ -50,7 +50,8 @@ namespace Home3_WPF
         private void ButtonAddToDo_Click(Object sender, RoutedEventArgs e)
         {
             createToDo.Show();
-            this.Owner = createToDo;
+            //this.Owner = createToDo;
+            createToDo.Owner = this;
         }
 
     }
