@@ -41,7 +41,7 @@ namespace Home3_WPF
             descriptionToDo.Text = "Описания нет";
             (this.Owner as MainWindow).RefreshToDoList();
             
-            this.Hide();
+            this.Close();
         }
     }
 }

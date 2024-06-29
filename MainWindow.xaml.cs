@@ -18,7 +18,7 @@ namespace Home3_WPF
     public partial class MainWindow : Window
     {
         public static List<ToDo> toDoList = new List<ToDo>();
-        public CreateToDo createToDo = new CreateToDo();
+        public CreateToDo createToDo;
         public MainWindow()
         {
             InitializeComponent();
@@ -29,28 +29,48 @@ namespace Home3_WPF
             toDoList.Add(new ToDo("Построить дерево", new DateTime(2024, 01, 12), "Важно!!!", false));
             toDoList.Add(new ToDo("Вырастить дом", new DateTime(2024, 01, 13), "Важно!!!!!",false));
             toDoList.Add(new ToDo("Умереть", new DateTime(2024, 01, 15), "Важно!!!!!!", false));
-
+            
             RefreshToDoList();
 
 
         }
 
+        private void CheckboxEnableToDo_Checked(object sender, RoutedEventArgs e)
+        {
+            if (dataGridToDo.SelectedItem == null) return;
+
+            int index = toDoList.IndexOf(dataGridToDo.SelectedItem as ToDo);
+            toDoList[index].Doing = true;
+
+        }
+
+        private void CheckboxEnableToDo_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (dataGridToDo.SelectedItem == null) return;
+
+            int index = toDoList.IndexOf(dataGridToDo.SelectedItem as ToDo);
+            toDoList[index].Doing = false;               
+           
+        }
+
+
+
         public void RefreshToDoList()
         {
-            listToDo.ItemsSource = null;
-            listToDo.ItemsSource = toDoList;
+            dataGridToDo.ItemsSource = null;
+            dataGridToDo.ItemsSource = toDoList;
         }
 
         private void ButtonRemoveToDo_Click(object sender, RoutedEventArgs e)
         {
-            toDoList.Remove(listToDo.SelectedItem as ToDo);
+            toDoList.Remove(dataGridToDo.SelectedItem as ToDo);           
             RefreshToDoList();
         }
 
         private void ButtonAddToDo_Click(Object sender, RoutedEventArgs e)
         {
+            createToDo = new CreateToDo();
             createToDo.Show();
-            //this.Owner = createToDo;
             createToDo.Owner = this;
         }
 
