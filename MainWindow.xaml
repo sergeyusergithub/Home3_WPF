@@ -6,47 +6,61 @@
         xmlns:local="clr-namespace:Home3_WPF"
         mc:Ignorable="d"
         Title="Список дел" Height="450" Width="400" Icon="Images/icon.png">
+    <Window.Resources>
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="HeadersVisibility" Value="None"/>
+            <Setter Property="AlternatingRowBackground" Value="#FFFDFAF1"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#5EBEC4"/>
+        </Style>
+
+    </Window.Resources>
     <Grid Background="#FFFDFAF1">
-        
-        <DockPanel LastChildFill="True" Grid.Column="0" Margin="5 0 10 5">
-            <Grid DockPanel.Dock="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" FontSize="26" HorizontalAlignment="Left">Список дел</TextBlock>
-                <Button Grid.Column="1" MaxWidth ="40" MinWidth="30" HorizontalAlignment="Right" MaxHeight="20" MinHeight="20"  Margin="0 5 0 0" Background="#5EBEC4"
-                         Click="ButtonAddToDo_Click">
-                    <Image Source="Images/add.png"></Image>
-                </Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" LastChildFill="True" Grid.Column="0" Margin="5 0 5 5">
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Style="{StaticResource HeaderStyle}">Список дел</TextBlock>
+                    <Button Grid.Column="1" MaxWidth ="40" MinWidth="30" HorizontalAlignment="Right" MaxHeight="20" MinHeight="20"  Margin="0 5 0 0" Background="#5EBEC4"
+                             Click="ButtonAddToDo_Click">
+                            <Image Source="Images/add.png"></Image>
+                    </Button>
 
             </Grid>
-            
-            
 
-            <DataGrid Name ="dataGridToDo" ColumnWidth="auto" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid Name ="dataGridToDo" ColumnWidth="auto">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox Name ="checkboxEnableToDo" 
+                                <CheckBox Name ="checkboxEnableToDo" IsChecked="{Binding Doing}"
                                           Checked="CheckboxEnableToDo_Checked"
                                           Unchecked="CheckboxEnableToDo_Unchecked">
                                 </CheckBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
+
                     <DataGridTextColumn Width="15*"  Binding="{Binding Path=Title}"/>
                     <DataGridTextColumn Width="auto" Binding="{Binding Path=Date,StringFormat='dd.MM.yyy'}"/>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button MaxWidth ="10" MinWidth="10" MaxHeight="10" MinHeight="10" Background="#5EBEC4"
+                                <Button MaxWidth ="15" MinWidth="15" MaxHeight="15" MinHeight="15" Background="#5EBEC4"
                                             Click="ButtonRemoveToDo_Click">
                                     <Image Source="Images/delete.png"></Image>
                                 </Button>
-                            </DataTemplate>                            
+                            </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
@@ -57,13 +71,20 @@
                         </StackPanel>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
-                
+
             </DataGrid>
-            
-           
+
         </DockPanel>
 
-       
+        <ProgressBar Grid.Row="1" Name ="progressBar" Margin="5" Binding.SourceUpdated="endToDo"/>
+
+        <WrapPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding ElementName=progressBar, Path=Value}"></TextBlock>
+            <TextBlock >/</TextBlock>
+            <TextBlock Text="{Binding ElementName=progressBar,Path= Maximum}"></TextBlock>
+        </WrapPanel>
+
+
 
 
     </Grid>

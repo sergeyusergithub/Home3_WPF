@@ -7,9 +7,28 @@
         mc:Ignorable="d"
         Title="Добавление нового дела" Height="450" Width="400" ResizeMode="NoResize"
         Icon="Images/icon.png">
+    <Window.Resources>
+        <Style TargetType="DatePicker">
+            <Setter Property="Calendar.DisplayMode" Value="Month"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="BorderBrush" Value="#5EBEC4"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property = "CalendarStyle">
+                <Setter.Value>
+                    <Style TargetType="Calendar">
+                        <Setter Property="BorderThickness" Value="1.5"/>
+                        <Setter Property="BorderBrush" Value="#5EBEC4"/>
+                        <Setter Property="Background" Value="#FFFDFAF1"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+    </Window.Resources>
     <Grid>
         <DockPanel LastChildFill="True" Margin="10 0 5 5">
-            <Button Margin="0 5 0 0" Name="buttonSave" DockPanel.Dock="Bottom" MaxWidth="100"
+            <TextBlock DockPanel.Dock = "Top" HorizontalAlignment="Center" Style="{StaticResource HeaderStyle}">Новое дело</TextBlock>
+            <Button Margin="0 5 0 0" Name="buttonSave" DockPanel.Dock="Bottom" MaxWidth="150"
              MinHeight="20" Background="#5EBEC4" ToolTip="При добавлении дело
              появится в списке дел в новом окне, и его придется выполнить" Padding="5"
              Click="ButtonSaveToDo_Click">Сохранить дело</Button>

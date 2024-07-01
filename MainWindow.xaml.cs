@@ -41,6 +41,8 @@ namespace Home3_WPF
 
             int index = toDoList.IndexOf(dataGridToDo.SelectedItem as ToDo);
             toDoList[index].Doing = true;
+            endToDo(sender,e);
+            
 
         }
 
@@ -49,8 +51,9 @@ namespace Home3_WPF
             if (dataGridToDo.SelectedItem == null) return;
 
             int index = toDoList.IndexOf(dataGridToDo.SelectedItem as ToDo);
-            toDoList[index].Doing = false;               
-           
+            toDoList[index].Doing = false;
+            endToDo(sender, e);
+
         }
 
 
@@ -59,6 +62,7 @@ namespace Home3_WPF
         {
             dataGridToDo.ItemsSource = null;
             dataGridToDo.ItemsSource = toDoList;
+            endToDo(null, null);
         }
 
         private void ButtonRemoveToDo_Click(object sender, RoutedEventArgs e)
@@ -72,6 +76,15 @@ namespace Home3_WPF
             createToDo = new CreateToDo();
             createToDo.Show();
             createToDo.Owner = this;
+        }
+
+        private void endToDo(object sender, RoutedEventArgs e)
+        {
+            progressBar.Minimum = 0;
+            progressBar.Maximum = toDoList.Count;
+            progressBar.Value = toDoList.Where(td => td.Doing == true).Count();
+            
+            
         }
 
     }
