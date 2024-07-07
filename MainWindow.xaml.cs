@@ -33,6 +33,7 @@ namespace Home3_WPF
         public int CountDone { get; set; }
 
         public CreateToDo createToDo;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -47,7 +48,8 @@ namespace Home3_WPF
             todoList.Add(new ToDo("Вырастить дом", new DateTime(2024, 01, 13), "Важно!!!!!",false));
             todoList.Add(new ToDo("Умереть", new DateTime(2024, 01, 15), "Важно!!!!!!", false));
 
-            dataGridToDo.ItemsSource = todoList;
+            RefreshToDoList();
+           
 
 
         }
@@ -63,10 +65,10 @@ namespace Home3_WPF
 
         private void CheckboxEnableToDo_Checked(object sender, RoutedEventArgs e)
         {
-            if (dataGridToDo.SelectedItem == null) return;
+            if (listToDo.SelectedItem == null) return;
 
-            int index = toDoList.IndexOf(dataGridToDo.SelectedItem as ToDo);
-            toDoList[index].Doing = true;
+            int index = todoList.IndexOf(listToDo.SelectedItem as ToDo);
+            todoList[index].Doing = true;
             OnPropertyChanged();
 
 
@@ -74,23 +76,23 @@ namespace Home3_WPF
 
         private void CheckboxEnableToDo_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (dataGridToDo.SelectedItem == null) return;
+            if (listToDo.SelectedItem == null) return;
 
-            int index = toDoList.IndexOf(dataGridToDo.SelectedItem as ToDo);
-            toDoList[index].Doing = false;
+            int index = todoList.IndexOf(listToDo.SelectedItem as ToDo);
+            todoList[index].Doing = false;
             OnPropertyChanged();
 
         }
 
         public void RefreshToDoList()
         {
-            dataGridToDo.ItemsSource = null;
-            dataGridToDo.ItemsSource = toDoList;
+            listToDo.ItemsSource = null;
+            listToDo.ItemsSource = todoList;
         }
 
         private void ButtonRemoveToDo_Click(object sender, RoutedEventArgs e)
         {
-            toDoList.Remove(dataGridToDo.SelectedItem as ToDo);
+            todoList.Remove(listToDo.SelectedItem as ToDo);
             RefreshToDoList();
             OnPropertyChanged();
         }

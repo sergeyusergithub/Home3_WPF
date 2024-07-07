@@ -10,7 +10,6 @@
     <Window.Resources>
         <Style TargetType="DatePicker">
             <Setter Property="Calendar.DisplayMode" Value="Month"/>
-            <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="BorderBrush" Value="#5EBEC4"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property = "CalendarStyle">
@@ -18,10 +17,16 @@
                     <Style TargetType="Calendar">
                         <Setter Property="BorderThickness" Value="1.5"/>
                         <Setter Property="BorderBrush" Value="#5EBEC4"/>
-                        <Setter Property="Background" Value="#FFFDFAF1"/>
+                        <Setter Property="Background" Value="White"/>
                     </Style>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#FFFFFAD6"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Trigger>                
+            </Style.Triggers>
 
         </Style>
     </Window.Resources>
