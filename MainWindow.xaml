@@ -42,29 +42,35 @@
 
 
             <ListBox x:Name="listToDo" HorizontalContentAlignment="Stretch">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="15*"></ColumnDefinition>
-                        <ColumnDefinition Width="7*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                <ListBoxItem>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="15*"></ColumnDefinition>
+                                <ColumnDefinition Width="7*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                    <CheckBox Grid.Column="0" HorizontalContentAlignment="Stretch" Name ="checkboxEnableToDo" IsChecked="{Binding Doing}"
-                        Checked="CheckboxEnableToDo_Checked"
-                        Unchecked="CheckboxEnableToDo_Unchecked">
-                    </CheckBox>
+                            <CheckBox Grid.Column="0" HorizontalContentAlignment="Stretch" Name ="checkboxEnableToDo" IsChecked="{Binding Doing}"
+                                Checked="CheckboxEnableToDo_Checked"
+                                Unchecked="CheckboxEnableToDo_Unchecked">
+                            </CheckBox>
 
-                    <TextBlock Grid.Column="1" Text="{Binding Path=Title}"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Path=Title}"/>
 
-                    <TextBlock Grid.Column="2" Text="{Binding Path=Date,StringFormat='dd.MM.yyy'}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Path=Date,StringFormat='dd.MM.yyy'}"/>
 
-                    <Button Grid.Column="3" HorizontalContentAlignment="Stretch" MaxWidth ="18" MinWidth="18" MaxHeight="18" MinHeight="18" Background="#5EBEC4"
-                        Click="ButtonRemoveToDo_Click">
-                        <Image Source="Images/delete.png"></Image>
-                    </Button>
+                            <Button Grid.Column="3" HorizontalContentAlignment="Stretch" MaxWidth ="18" MinWidth="18" MaxHeight="18" MinHeight="18" Background="#5EBEC4"
+                                Click="ButtonRemoveToDo_Click">
+                                <Image Source="Images/delete.png"></Image>
+                            </Button>
 
-                </Grid>
+                        </Grid>
+                    </DataTemplate>
+                    
+                </ListBoxItem>
+                
             </ListBox>
         </DockPanel>
 

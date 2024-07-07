@@ -87,7 +87,7 @@ namespace Home3_WPF
         public void RefreshToDoList()
         {
             listToDo.ItemsSource = null;
-            listToDo.ItemsSource = todoList;
+            listToDo.ItemsSource = toDoList;
         }
 
         private void ButtonRemoveToDo_Click(object sender, RoutedEventArgs e)
