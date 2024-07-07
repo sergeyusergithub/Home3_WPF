@@ -76,7 +76,7 @@
 
         </DockPanel>
 
-        <ProgressBar Grid.Row="1" Name ="progressBar" Margin="5" Binding.SourceUpdated="endToDo"/>
+        <ProgressBar Grid.Row="1" Name ="progressBar" Value="{Binding Path=CountDone,Mode=OneWay}" Maximum="{Binding Path=todoList.Count,Mode=OneWay}" Margin="5"/>
 
         <WrapPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="{Binding ElementName=progressBar, Path=Value}"></TextBlock>

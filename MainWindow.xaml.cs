@@ -1,4 +1,5 @@
 ﻿using Home3_WPF.Resource;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,24 +16,49 @@ namespace Home3_WPF
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public static List<ToDo> toDoList = new List<ToDo>();
+        private List<ToDo> toDoList;
+        public List<ToDo> todoList
+        {
+            get { return toDoList; }
+            set
+            {
+                toDoList = value;
+                OnPropertyChanged();
+
+            }
+        }
+
+        public int CountDone { get; set; }
+
         public CreateToDo createToDo;
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = this;
+            toDoList = new List<ToDo>();
             
 
-            toDoList.Add(new ToDo("Родиться", new DateTime(2024, 01, 10), "Важно!",false));
-            toDoList.Add(new ToDo("Посадить сына", new DateTime(2024, 01, 11), "Важно!!",false));
-            toDoList.Add(new ToDo("Построить дерево", new DateTime(2024, 01, 12), "Важно!!!", false));
-            toDoList.Add(new ToDo("Вырастить дом", new DateTime(2024, 01, 13), "Важно!!!!!",false));
-            toDoList.Add(new ToDo("Умереть", new DateTime(2024, 01, 15), "Важно!!!!!!", false));
-            
-            RefreshToDoList();
+            todoList.Add(new ToDo("Родиться", new DateTime(2024, 01, 10), "Важно!",false));
+            todoList.Add(new ToDo("Посадить сына", new DateTime(2024, 01, 11), "Важно!!",false));
+            todoList.Add(new ToDo("Построить дерево", new DateTime(2024, 01, 12), "Важно!!!", false));
+            todoList.Add(new ToDo("Вырастить дом", new DateTime(2024, 01, 13), "Важно!!!!!",false));
+            todoList.Add(new ToDo("Умереть", new DateTime(2024, 01, 15), "Важно!!!!!!", false));
+
+            dataGridToDo.ItemsSource = todoList;
 
 
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged()
+        {
+            CountDone = todoList.Where(e => e.Doing == true).ToList().Count;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("todoList"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CountDone"));
         }
 
         private void CheckboxEnableToDo_Checked(object sender, RoutedEventArgs e)
@@ -41,8 +67,8 @@ namespace Home3_WPF
 
             int index = toDoList.IndexOf(dataGridToDo.SelectedItem as ToDo);
             toDoList[index].Doing = true;
-            endToDo(sender,e);
-            
+            OnPropertyChanged();
+
 
         }
 
@@ -52,23 +78,21 @@ namespace Home3_WPF
 
             int index = toDoList.IndexOf(dataGridToDo.SelectedItem as ToDo);
             toDoList[index].Doing = false;
-            endToDo(sender, e);
+            OnPropertyChanged();
 
         }
-
-
 
         public void RefreshToDoList()
         {
             dataGridToDo.ItemsSource = null;
             dataGridToDo.ItemsSource = toDoList;
-            endToDo(null, null);
         }
 
         private void ButtonRemoveToDo_Click(object sender, RoutedEventArgs e)
         {
-            toDoList.Remove(dataGridToDo.SelectedItem as ToDo);           
+            toDoList.Remove(dataGridToDo.SelectedItem as ToDo);
             RefreshToDoList();
+            OnPropertyChanged();
         }
 
         private void ButtonAddToDo_Click(Object sender, RoutedEventArgs e)
@@ -76,15 +100,7 @@ namespace Home3_WPF
             createToDo = new CreateToDo();
             createToDo.Show();
             createToDo.Owner = this;
-        }
-
-        private void endToDo(object sender, RoutedEventArgs e)
-        {
-            progressBar.Minimum = 0;
-            progressBar.Maximum = toDoList.Count;
-            progressBar.Value = toDoList.Where(td => td.Doing == true).Count();
-            
-            
+            OnPropertyChanged();
         }
 
     }
