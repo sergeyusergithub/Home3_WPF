@@ -15,12 +15,11 @@ namespace Home3_WPF.Resource
 
         public ToDo() { }
 
-        public ToDo(string title, DateTime date, string description, bool doing)
+        public ToDo(string title, string description, DateTime date)
         {
             this.Title = title;
             this.Date = date;
             this.Description = description;
-            this.Doing = doing;
         }
     }
 }

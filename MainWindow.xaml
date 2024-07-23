@@ -3,10 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Home3_WPF"
+        xmlns:local="clr-namespace:Home3_WPF.Resource"
         mc:Ignorable="d"
         Title="Список дел" Height="450" Width="400" Icon="Images/icon.png">
     <Window.Resources>
+        <local:DateTimeLessDateConverter x:Key="LessDayConverter"/>
+        <local:DateTimeTodayDateConverter x:Key="TodayDayConverter"/>
+        <local:DateTimeTomorrowDateConverter x:Key="MoreDayConverter"/>
+        
+        
         <Style TargetType="DataGrid">
             <Setter Property="AutoGenerateColumns" Value="False"/>
             <Setter Property="CanUserAddRows" Value="False"/>
@@ -15,6 +20,30 @@
             <Setter Property="AlternatingRowBackground" Value="#FFFDFAF1"/>
             <Setter Property="GridLinesVisibility" Value="Horizontal"/>
             <Setter Property="HorizontalGridLinesBrush" Value="#5EBEC4"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="textStrikeStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=checkboxEnableToDo,Path=IsChecked}" Value="True">
+                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="dataColorStyle">
+            <Setter Property="Foreground" Value="#FF71C52F"/>
+            <Style.Triggers>
+                <DataTrigger Binding ="{Binding Path=Date,Converter={StaticResource LessDayConverter}}"
+                             Value="True">
+                    <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Date,Converter={StaticResource TodayDayConverter}}"
+                             Value="True">
+                    <Setter Property="Foreground" Value="#FFEA6A20"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Date,Converter={StaticResource MoreDayConverter}}"
+             Value="True">
+                    <Setter Property="Foreground" Value="#DAA520"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
     </Window.Resources>
@@ -42,7 +71,7 @@
 
 
             <ListBox x:Name="listToDo" HorizontalContentAlignment="Stretch">
-                <ListBoxItem>
+                <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -51,26 +80,40 @@
                                 <ColumnDefinition Width="7*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
 
                             <CheckBox Grid.Column="0" HorizontalContentAlignment="Stretch" Name ="checkboxEnableToDo" IsChecked="{Binding Doing}"
-                                Checked="CheckboxEnableToDo_Checked"
-                                Unchecked="CheckboxEnableToDo_Unchecked">
+                                    Checked="CheckboxEnableToDo_Checked"
+                                    Unchecked="CheckboxEnableToDo_Unchecked">
                             </CheckBox>
 
-                            <TextBlock Grid.Column="1" Text="{Binding Path=Title}"/>
+                            <TextBlock Style="{StaticResource textStrikeStyle}" Grid.Column="1" Text="{Binding Path=Title}"/>
 
-                            <TextBlock Grid.Column="2" Text="{Binding Path=Date,StringFormat='dd.MM.yyy'}"/>
+                            <TextBlock Grid.Column="2" Style="{StaticResource dataColorStyle}"  Text="{Binding Path=Date,StringFormat='dd.MM.yyy'}"/>
+                            <TextBlock Grid.Column ="1" Grid.Row="1" Text="{Binding  Path=Description}"/>
 
-                            <Button Grid.Column="3" HorizontalContentAlignment="Stretch" MaxWidth ="18" MinWidth="18" MaxHeight="18" MinHeight="18" Background="#5EBEC4"
-                                Click="ButtonRemoveToDo_Click">
+                            <Button Grid.Column="3" MaxWidth ="18" MinWidth="18" MaxHeight="18" MinHeight="18" Background="#5EBEC4"
+                                    Click="ButtonRemoveToDo_Click">
                                 <Image Source="Images/delete.png"></Image>
                             </Button>
 
                         </Grid>
                     </DataTemplate>
-                    
-                </ListBoxItem>
-                
+
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="TextBlock.FontWeight" Value="Bold" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
             </ListBox>
         </DockPanel>
 
@@ -81,9 +124,6 @@
             <TextBlock >/</TextBlock>
             <TextBlock Text="{Binding ElementName=progressBar,Path= Maximum}"></TextBlock>
         </WrapPanel>
-
-
-
 
     </Grid>
 </Window>

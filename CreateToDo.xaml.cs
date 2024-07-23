@@ -20,27 +20,26 @@ namespace Home3_WPF
     /// </summary>
     public partial class CreateToDo : Window
     {
+        MainWindow main;
         public CreateToDo()
         {
             InitializeComponent();
             descriptionToDo.Text = "Описания нет";
             dateToDo.SelectedDate = DateTime.Today.AddDays(1);
+            MainWindow main = (this.Owner as MainWindow);
+            this.main = main;
         }
 
         private void ButtonSaveToDo_Click(Object sender, RoutedEventArgs e)
         {
-                   
-            if (!dateToDo.SelectedDate.HasValue)
-            {
-                MessageBox.Show("Дата повесилась", Name = "ашыпка");
-                return;
-            }
+            (this.Owner as MainWindow).todoList.Add(new ToDo(titleToDo.Text, descriptionToDo.Text, dateToDo.SelectedDate.Value));
 
-            (this.Owner as MainWindow).todoList.Add(new ToDo(titleToDo.Text, (DateTime)dateToDo.SelectedDate, descriptionToDo.Text,false));
-            titleToDo.Text = null;
+            titleToDo.Text = "";
             descriptionToDo.Text = "Описания нет";
+            dateToDo.SelectedDate = new DateTime(2024, 01, 10);
+
+            (this.Owner as MainWindow).listToDo.Items.Refresh();
             (this.Owner as MainWindow).OnPropertyChanged();
-            (this.Owner as MainWindow).RefreshToDoList();
 
             this.Close();
         }
