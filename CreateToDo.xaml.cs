@@ -20,15 +20,18 @@ namespace Home3_WPF
     /// </summary>
     public partial class CreateToDo : Window
     {
+        
         MainWindow main;
         public CreateToDo()
         {
             InitializeComponent();
             descriptionToDo.Text = "Описания нет";
-            dateToDo.SelectedDate = DateTime.Today.AddDays(1);
+            dateToDo.SelectedDate = DateTime.Today;
             MainWindow main = (this.Owner as MainWindow);
             this.main = main;
         }
+
+        public static RoutedCommand EnterAddToList1 = new RoutedCommand();
 
         private void ButtonSaveToDo_Click(Object sender, RoutedEventArgs e)
         {
